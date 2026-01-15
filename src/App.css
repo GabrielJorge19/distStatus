@@ -1,0 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: flex;
+  /* width: 500; */
+  flex: 1;
+  /* height: 100vh; */
+}
