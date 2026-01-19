@@ -2,9 +2,7 @@ import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import './App.css';
 import Distritos from "./distritos";
-import { useEffect, useState } from 'react';
-import getData from "./data";
-
+import Legend from './legend';
 
 function App() {
 
@@ -20,6 +18,7 @@ function App() {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <Distritos />
+      <Legend />
     </MapContainer>
   )
 }

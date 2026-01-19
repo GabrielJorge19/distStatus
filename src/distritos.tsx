@@ -1,8 +1,15 @@
+import { useEffect, useState } from "react";
 import { GeoJSON } from "react-leaflet";
 import geoJsonDistricts from "./dadosDosDistritos";
 import getData from "./data";
-import { useCallback, useEffect, useMemo, useState } from "react";
 
+export const STATUS_COLORS = {
+  CRITICO: "#8b0000",
+  ATENCAO: "#ff8c00",
+  REGULAR: "#ffd700",
+  BOM: "#2e8b57",
+  SEM_DADO: "#e0e0e0",
+};
 
 const distritos: any = {
     type: "FeatureCollection",
@@ -24,37 +31,31 @@ function normalizarDistrito(valor: string): string {
 }
 
 
-function getColor(valor?: number, minimo = 0) {
-    if (typeof valor !== "number" || isNaN(valor)) {
-        return "#e0e0e0"; // sem dado
-    }
 
-    // Limita intervalo válido
-    const v = Math.min(Math.max(valor, 0), 100);
+function getColor(valor?: number) {
+  if (typeof valor !== "number" || isNaN(valor)) {
+    return STATUS_COLORS.SEM_DADO;
+  }
 
-    // Se estiver abaixo do mínimo → vermelho puro
-    if (v <= minimo) {
-        return "#d15454"; // vermelho base (209,84,84)
-    }
+  if (valor < 40) {
+    return STATUS_COLORS.CRITICO;
+  }
 
-    // Normaliza o valor considerando o mínimo
-    const t = (v - minimo) / (100 - minimo);
+  if (valor < 60) {
+    return STATUS_COLORS.ATENCAO;
+  }
 
-    // Interpolação do vermelho → verde
-    const r = Math.round(209 + (76 - 209) * t);
-    const g = Math.round(84 + (120 - 84) * t);
-    const b = Math.round(84 + (204 - 84) * t);
+  if (valor < 80) {
+    return STATUS_COLORS.REGULAR;
+  }
 
-    const toHex = (n: number) => n.toString(16).padStart(2, "0");
-    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  return STATUS_COLORS.BOM;
 }
+
 
 
 export default function Distritos() {
     const [distData, setDistData] = useState<Record<string, number>>({});
-    const distMin = useMemo(() => Math.min(...Object.values(distData)), [distData])
-
-    console.log("distMin", distMin);
 
     useEffect(() => {
         getData().then((result) => {
@@ -73,7 +74,7 @@ export default function Distritos() {
             weight: 1,
             opacity: 1,
             fillOpacity: 1,
-            fillColor: getColor(percentual, distMin),
+            fillColor: getColor(percentual),
         };
     };
 
