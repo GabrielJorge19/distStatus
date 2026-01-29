@@ -1,0 +1,12 @@
+#testeLayout {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+}
+
+@media (max-width: 768px) {
+  #testeLayout {
+    padding-bottom: var(--bottom-nav-height);
+  }
+}

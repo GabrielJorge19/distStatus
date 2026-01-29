@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import geoJsonDistricts from "@/assets/dadosDosDistritos";
+import Legend from "@/components/legend";
+import { useApp } from "@/contexts/AppContext";
 import { GeoJSON } from "react-leaflet";
-import geoJsonDistricts from "./dadosDosDistritos";
-import getData from "./data";
+
 
 export const STATUS_COLORS = {
-  CRITICO: "#8b0000",
-  ATENCAO: "#ff8c00",
-  REGULAR: "#ffd700",
-  BOM: "#2e8b57",
-  SEM_DADO: "#e0e0e0",
+    CRITICO: "#8b0000",
+    ATENCAO: "#ff8c00",
+    REGULAR: "#ffd700",
+    BOM: "#2e8b57",
+    SEM_DADO: "#e0e0e0",
 };
 
 const distritos: any = {
@@ -33,35 +34,31 @@ function normalizarDistrito(valor: string): string {
 
 
 function getColor(valor?: number) {
-  if (typeof valor !== "number" || isNaN(valor)) {
-    return STATUS_COLORS.SEM_DADO;
-  }
+    if (typeof valor !== "number" || isNaN(valor)) {
+        return STATUS_COLORS.SEM_DADO;
+    }
 
-  if (valor < 40) {
-    return STATUS_COLORS.CRITICO;
-  }
+    if (valor < 40) {
+        return STATUS_COLORS.CRITICO;
+    }
 
-  if (valor < 60) {
-    return STATUS_COLORS.ATENCAO;
-  }
+    if (valor < 60) {
+        return STATUS_COLORS.ATENCAO;
+    }
 
-  if (valor < 80) {
-    return STATUS_COLORS.REGULAR;
-  }
+    if (valor < 80) {
+        return STATUS_COLORS.REGULAR;
+    }
 
-  return STATUS_COLORS.BOM;
+    return STATUS_COLORS.BOM;
 }
 
 
 
-export default function Distritos() {
-    const [distData, setDistData] = useState<Record<string, number>>({});
 
-    useEffect(() => {
-        getData().then((result) => {
-            setDistData(result ?? {});
-        });
-    }, []);
+export default function Distritos() {
+    const { data } = useApp();
+    const distData = data?.distStats || {}
 
 
     const geoJsonStyle = (feature: any) => {
@@ -120,13 +117,16 @@ export default function Distritos() {
 
     if (!Object.keys(distData).length) return null;
 
-    return (
+    return <>
+
+        {/* {!!Object.keys(distData).length ? "asdsssssssssssssss" : "www"} */}
         <GeoJSON
             data={distritos}
             style={geoJsonStyle}
             onEachFeature={onEachFeature}
         />
-    );
+        <Legend />
+    </>;
 }
 
 
@@ -145,5 +145,3 @@ function criarPopup(feature: any, distData: Record<string, number>) {
     </div>
   `;
 }
-
-

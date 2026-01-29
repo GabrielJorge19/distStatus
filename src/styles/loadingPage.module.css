@@ -1,0 +1,61 @@
+.container {
+  position: absolute;
+  z-index: 9999;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+
+  background: linear-gradient(135deg, #f9fafb, #eef2ff);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  padding: 32px 40px;
+  border-radius: 12px;
+
+  background-color: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+
+  text-align: center;
+}
+
+.card h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.card p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Spinner */
+.spinner {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+
+  border: 3px solid #e5e7eb;
+  border-top-color: #2563eb;
+
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}

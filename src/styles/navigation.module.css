@@ -1,0 +1,101 @@
+/* ================================
+   MOBILE FIRST – Bottom Navigation
+   ================================ */
+
+:root {
+  --bottom-nav-height: 56px;
+  --nav-bg: #fbf9f9;          /* fundo suave */
+  --nav-border: #ebe6e5;
+  --nav-active: #2563eb;
+  --nav-text: #6b7280;
+  --nav-text-active: #000000;
+}
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  height: var(--bottom-nav-height);
+  padding: 0 8px;
+
+  background-color: var(--nav-bg);
+  /* border-top: 1px solid var(--nav-border); */
+
+  /* box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.06); */
+
+  /* z-index: 100; */
+}
+
+/* Links */
+.link {
+  flex: 1;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--nav-text);
+
+  position: relative;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.link.active {
+    color: var(--nav-text-active);
+}
+
+/* Feedback de toque */
+.link:active {
+  /* background-color: rgba(37, 99, 235, 1); */
+    color: var(--nav-text-active);
+}
+
+/* ================================
+   DESKTOP – Top Navigation
+   ================================ */
+
+@media (min-width: 768px) {
+  .nav {
+    position: sticky;
+    top: 0;
+
+    justify-content: flex-start;
+    gap: 32px;
+
+    /* height: auto; */
+    padding: 0 24px;
+
+    background-color: #ffffff;
+    border-top: none;
+    border-bottom: 1px solid var(--nav-border);
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .link {
+    flex: unset;
+    height: auto;
+
+    padding: 7px;
+    border-radius: 5px;
+  }
+
+  .link.active {
+    color: var(--nav-text-active);
+  }
+
+  .link:hover {
+    color: var(--nav-text-active);
+  }
+}
